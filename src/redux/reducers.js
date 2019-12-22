@@ -1,25 +1,44 @@
-import { EMPLOYEES_LOADED } from './constants';
+import * as constants from "./constants";
 
 export const initialState = {
   employees: [],
+  loading: false,
+  error: null
 };
 
 // Read this: https://redux.js.org/basics/reducers
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
-    case EMPLOYEES_LOADED: {
-      const { employees } = action.payload;
-      // CAREFUL: You can't modify state variable directly.
-      return { ...state, employees: employees };
-    }
-    case EMPLOYEE_ADDED: {
+    case constants.EMPLOYEE_ADDED: {
       const { employee } = action.payload;
       return { ...state, employees: [...state.employees, employee]};
     }
+    case constants.FETCH_EMPLOYEES_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+
+    case constants.FETCH_EMPLOYEES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        employees: action.payload.employees
+      };
+
+    case constants.FETCH_EMPLOYEES_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+        employees: []
+      };
+
     default:
-        return state
+      return state;
   }
-}
+};
 
 export default appReducer;

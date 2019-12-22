@@ -3,7 +3,8 @@ import * as constants from "./constants";
 export const initialState = {
   employees: [],
   loading: false,
-  error: null
+  error: null,
+  user: null
 };
 
 // Read this: https://redux.js.org/basics/reducers
@@ -35,7 +36,10 @@ const appReducer = (state = initialState, action) => {
         error: action.payload.error,
         employees: []
       };
-
+      case constants.USER_LOGGED_IN: {
+          const { user } = action.payload;
+          return { ...state, user};
+      }
     default:
       return state;
   }

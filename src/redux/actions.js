@@ -9,6 +9,15 @@ export const employeeAdded = employee => {
   };
 };
 
+export const userLoggedIn = user => {
+    return {
+        type: constants.USER_LOGGED_IN,
+        payload: {
+            user
+        }
+    };
+};
+
 function fetchData() {
   return fetch("http://localhost:3004/employees")
       .then(data => data.json())

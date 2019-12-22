@@ -19,7 +19,7 @@ class PageEmployeesList extends React.Component {
   }
 
   render() {
-    const { error, loading, employees } = this.props;
+    const { error, loading, employees, user } = this.props;
     if (loading) {
       return <p>Loading ...</p>;
     }
@@ -27,9 +27,12 @@ class PageEmployeesList extends React.Component {
     if (error) {
       return <div>Error! {error.message}</div>;
     }
-
+    const style = {
+      textAlign: 'right'
+    };
     return (
       <div>
+        {user && <div style={style}>{user.full_name}</div>}
         <h1>Employees List:</h1>
         {employees &&
           employees.map(employee => (
@@ -48,7 +51,8 @@ const mapStateToProps = (state) => {
   return {
     employees: state.employees,
     loading: state.loading,
-    error: state.error
+    error: state.error,
+    user: state.user,
   };
 };
 
